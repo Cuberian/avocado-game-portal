@@ -11,6 +11,13 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.Game = void 0;
 const sequelize_typescript_1 = require("sequelize-typescript");
+const platform_model_1 = require("../platforms/platform.model");
+const game_platforms_model_1 = require("./game-platforms.model");
+const game_publishers_model_1 = require("./game-publishers.model");
+const studio_model_1 = require("../studios/studio.model");
+const game_studios_model_1 = require("./game-studios.model");
+const game_genres_model_1 = require("./game-genres.model");
+const genre_model_1 = require("../genres/genre.model");
 let Game = class Game extends sequelize_typescript_1.Model {
 };
 __decorate([
@@ -25,6 +32,22 @@ __decorate([
     sequelize_typescript_1.Column({ type: sequelize_typescript_1.DataType.DATE }),
     __metadata("design:type", Date)
 ], Game.prototype, "release_date", void 0);
+__decorate([
+    sequelize_typescript_1.BelongsToMany(() => platform_model_1.Platform, () => game_platforms_model_1.GamePlatforms),
+    __metadata("design:type", Array)
+], Game.prototype, "platforms", void 0);
+__decorate([
+    sequelize_typescript_1.BelongsToMany(() => studio_model_1.Studio, () => game_publishers_model_1.GamePublishers),
+    __metadata("design:type", Array)
+], Game.prototype, "publishers", void 0);
+__decorate([
+    sequelize_typescript_1.BelongsToMany(() => studio_model_1.Studio, () => game_studios_model_1.GameStudios),
+    __metadata("design:type", Array)
+], Game.prototype, "studios", void 0);
+__decorate([
+    sequelize_typescript_1.BelongsToMany(() => genre_model_1.Genre, () => game_genres_model_1.GameGenres),
+    __metadata("design:type", Array)
+], Game.prototype, "genres", void 0);
 Game = __decorate([
     sequelize_typescript_1.Table({ tableName: 'games' })
 ], Game);

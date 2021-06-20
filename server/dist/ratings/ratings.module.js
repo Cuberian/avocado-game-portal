@@ -10,12 +10,17 @@ exports.RatingsModule = void 0;
 const common_1 = require("@nestjs/common");
 const ratings_controller_1 = require("./ratings.controller");
 const ratings_service_1 = require("./ratings.service");
+const sequelize_1 = require("@nestjs/sequelize");
+const rating_model_1 = require("./rating.model");
 let RatingsModule = class RatingsModule {
 };
 RatingsModule = __decorate([
     common_1.Module({
         controllers: [ratings_controller_1.RatingsController],
-        providers: [ratings_service_1.RatingsService]
+        providers: [ratings_service_1.RatingsService],
+        imports: [
+            sequelize_1.SequelizeModule.forFeature([rating_model_1.Rating])
+        ]
     })
 ], RatingsModule);
 exports.RatingsModule = RatingsModule;

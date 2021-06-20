@@ -13,6 +13,8 @@ const news_controller_1 = require("./news.controller");
 const sequelize_1 = require("@nestjs/sequelize");
 const news_model_1 = require("./news.model");
 const user_model_1 = require("../users/user.model");
+const tag_model_1 = require("../tags/tag.model");
+const news_tags_model_1 = require("../tags/news-tags.model");
 let NewsModule = class NewsModule {
 };
 NewsModule = __decorate([
@@ -20,7 +22,7 @@ NewsModule = __decorate([
         providers: [news_service_1.NewsService],
         controllers: [news_controller_1.NewsController],
         imports: [
-            sequelize_1.SequelizeModule.forFeature([news_model_1.News, user_model_1.User])
+            sequelize_1.SequelizeModule.forFeature([news_model_1.News, user_model_1.User, tag_model_1.Tag, news_tags_model_1.NewsTags])
         ]
     })
 ], NewsModule);

@@ -1,6 +1,7 @@
-import {BelongsTo, Column, DataType, ForeignKey, Model, Table} from "sequelize-typescript";
-import {Role} from "../roles/role.model";
+import {BelongsTo, BelongsToMany, Column, DataType, ForeignKey, Model, Table} from "sequelize-typescript";
 import {User} from "../users/user.model";
+import {NewsTags} from "../tags/news-tags.model";
+import {Tag} from "../tags/tag.model";
 
 interface NewsCreationAttributes {
     header: string,
@@ -33,6 +34,9 @@ export class News extends Model<News, NewsCreationAttributes> {
     })
     author_id: number;
 
-    @BelongsTo(() => Role, 'author_id')
+    @BelongsTo(() => User, 'author_id')
     author: User;
+
+    @BelongsToMany(() => Tag, () => NewsTags)
+    tags: Tag[]
 }

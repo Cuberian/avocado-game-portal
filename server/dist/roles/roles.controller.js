@@ -17,17 +17,17 @@ const common_1 = require("@nestjs/common");
 const roles_service_1 = require("./roles.service");
 const create_role_dto_1 = require("./dto/create-role.dto");
 let RolesController = class RolesController {
-    constructor(roleService) {
-        this.roleService = roleService;
+    constructor(rolesService) {
+        this.rolesService = rolesService;
     }
     create(dto) {
-        return this.roleService.createRole(dto);
+        return this.rolesService.createRole(dto);
     }
     getByValue(value) {
-        return this.roleService.getRoleByValue(value);
+        return this.rolesService.getRoleByValue(value);
     }
     getAll() {
-        return this.roleService.getAllRoles();
+        return this.rolesService.getAllRoles();
     }
 };
 __decorate([

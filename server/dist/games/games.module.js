@@ -12,6 +12,13 @@ const games_controller_1 = require("./games.controller");
 const games_service_1 = require("./games.service");
 const game_model_1 = require("./game.model");
 const sequelize_1 = require("@nestjs/sequelize");
+const platform_model_1 = require("../platforms/platform.model");
+const genre_model_1 = require("../genres/genre.model");
+const studio_model_1 = require("../studios/studio.model");
+const game_platforms_model_1 = require("./game-platforms.model");
+const game_studios_model_1 = require("./game-studios.model");
+const game_publishers_model_1 = require("./game-publishers.model");
+const game_genres_model_1 = require("./game-genres.model");
 let GamesModule = class GamesModule {
 };
 GamesModule = __decorate([
@@ -19,7 +26,7 @@ GamesModule = __decorate([
         controllers: [games_controller_1.GamesController],
         providers: [games_service_1.GamesService],
         imports: [
-            sequelize_1.SequelizeModule.forFeature([game_model_1.Game])
+            sequelize_1.SequelizeModule.forFeature([game_model_1.Game, platform_model_1.Platform, genre_model_1.Genre, studio_model_1.Studio, game_platforms_model_1.GamePlatforms, game_studios_model_1.GameStudios, game_publishers_model_1.GamePublishers, game_genres_model_1.GameGenres])
         ]
     })
 ], GamesModule);
