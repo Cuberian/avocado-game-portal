@@ -5,7 +5,7 @@ const NavBar = () => {
     const {user} = useContext(Context)
     return (
         <div>
-            
+
         </div>
     );
 };
