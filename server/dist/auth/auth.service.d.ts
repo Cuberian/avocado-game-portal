@@ -16,4 +16,5 @@ export declare class AuthService {
     registration(userDto: CreateUserDto): Promise<{
         token: string;
     }>;
+    check(userDto: CreateUserDto): Promise<string>;
 }

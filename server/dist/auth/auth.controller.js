@@ -26,6 +26,9 @@ let AuthController = class AuthController {
     registration(userDto) {
         return this.authService.registration(userDto);
     }
+    check(userDto) {
+        return this.authService.check(userDto);
+    }
 };
 __decorate([
     common_1.Post('/login'),
@@ -41,6 +44,13 @@ __decorate([
     __metadata("design:paramtypes", [create_user_dto_1.CreateUserDto]),
     __metadata("design:returntype", void 0)
 ], AuthController.prototype, "registration", null);
+__decorate([
+    common_1.Post('/check'),
+    __param(0, common_1.Body()),
+    __metadata("design:type", Function),
+    __metadata("design:paramtypes", [create_user_dto_1.CreateUserDto]),
+    __metadata("design:returntype", void 0)
+], AuthController.prototype, "check", null);
 AuthController = __decorate([
     common_1.Controller('auth'),
     __metadata("design:paramtypes", [auth_service_1.AuthService])

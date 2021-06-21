@@ -9,4 +9,5 @@ export declare class AuthController {
     registration(userDto: CreateUserDto): Promise<{
         token: string;
     }>;
+    check(userDto: CreateUserDto): Promise<string>;
 }

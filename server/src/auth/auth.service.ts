@@ -51,4 +51,8 @@ export class AuthService {
         const user = await this.usersService.createUser({...userDto, password: hashPassword})
         return this.generateToken(user)
     }
+
+    async check(userDto: CreateUserDto) {
+        return 'ggg'
+    }
 }

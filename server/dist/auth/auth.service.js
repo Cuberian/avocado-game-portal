@@ -51,6 +51,9 @@ let AuthService = class AuthService {
         const user = await this.usersService.createUser(Object.assign(Object.assign({}, userDto), { password: hashPassword }));
         return this.generateToken(user);
     }
+    async check(userDto) {
+        return 'ggg';
+    }
 };
 AuthService = __decorate([
     common_1.Injectable(),
