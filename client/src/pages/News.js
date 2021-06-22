@@ -2,7 +2,7 @@ import React from 'react';
 
 const News = () => {
     return (
-        <div>
+        <div className="font-pressStart">
             NEWS
         </div>
     );

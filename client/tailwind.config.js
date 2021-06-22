@@ -16,7 +16,15 @@ module.exports = {
       transparent: 'transparent',
       current: 'currentColor',
 
-      black: colors.black,
+      specialGray: {
+        200: '#CFD8DC',
+        600: '#607D8B'
+      },
+      avocado: {
+        400: '#BDE746',
+        800: '#21472D'
+      },
+      black: '#212121',
       white: colors.white,
       gray: colors.coolGray,
       red: colors.red,
@@ -266,6 +274,12 @@ module.exports = {
         '"Courier New"',
         'monospace',
       ],
+      pressStart: [
+          '"Press Start 2P"'
+      ],
+      play: [
+          'Play'
+      ]
     },
     fontSize: {
       xs: ['0.75rem', { lineHeight: '1rem' }],
