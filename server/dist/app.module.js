@@ -36,6 +36,7 @@ const game_studios_model_1 = require("./games/game-studios.model");
 const game_publishers_model_1 = require("./games/game-publishers.model");
 const game_genres_model_1 = require("./games/game-genres.model");
 const news_tags_model_1 = require("./tags/news-tags.model");
+const images_module_1 = require("./images/images.module");
 let AppModule = class AppModule {
 };
 AppModule = __decorate([
@@ -67,6 +68,7 @@ AppModule = __decorate([
             genres_module_1.GenresModule,
             studios_module_1.StudiosModule,
             comments_module_1.CommentsModule,
+            images_module_1.ImagesModule,
         ]
     })
 ], AppModule);

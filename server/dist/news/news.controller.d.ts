@@ -6,4 +6,6 @@ export declare class NewsController {
     create(dto: CreateNewsDto): Promise<import("./news.model").News>;
     getById(id: number): Promise<import("./news.model").News>;
     getAll(): Promise<import("./news.model").News[]>;
+    uploadFile(file: any, body: any): Promise<import("./news.model").News>;
+    findCoverImage(filename: string, res: any): import("rxjs").Observable<any>;
 }

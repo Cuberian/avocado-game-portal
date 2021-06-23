@@ -28,6 +28,7 @@ import { GameStudios } from "./games/game-studios.model";
 import { GamePublishers } from "./games/game-publishers.model";
 import { GameGenres } from "./games/game-genres.model";
 import {NewsTags} from "./tags/news-tags.model";
+import { ImagesModule } from './images/images.module';
 
 @Module({
     controllers: [],
@@ -57,6 +58,7 @@ import {NewsTags} from "./tags/news-tags.model";
         GenresModule,
         StudiosModule,
         CommentsModule,
+        ImagesModule,
     ]
 })
 export class AppModule {}

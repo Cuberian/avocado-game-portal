@@ -25,6 +25,10 @@ __decorate([
     __metadata("design:type", String)
 ], News.prototype, "header", void 0);
 __decorate([
+    sequelize_typescript_1.Column({ type: sequelize_typescript_1.DataType.STRING }),
+    __metadata("design:type", String)
+], News.prototype, "coverImage", void 0);
+__decorate([
     sequelize_typescript_1.Column({ type: sequelize_typescript_1.DataType.TEXT, allowNull: false }),
     __metadata("design:type", String)
 ], News.prototype, "text", void 0);

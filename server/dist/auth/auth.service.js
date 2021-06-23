@@ -51,8 +51,8 @@ let AuthService = class AuthService {
         const user = await this.usersService.createUser(Object.assign(Object.assign({}, userDto), { password: hashPassword }));
         return this.generateToken(user);
     }
-    async check(userDto) {
-        return 'ggg';
+    async check(user) {
+        return this.generateToken(user);
     }
 };
 AuthService = __decorate([

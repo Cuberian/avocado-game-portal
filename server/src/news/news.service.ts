@@ -19,4 +19,9 @@ export class NewsService {
     async getAllNews() {
         return await this.newsRepository.findAll()
     }
+
+    async setCover(newsId: number, coverImage: string) {
+        const news = await this.newsRepository.findByPk(newsId)
+        return await news.update({'coverImage': coverImage})
+    }
 }

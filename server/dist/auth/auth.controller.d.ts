@@ -1,5 +1,6 @@
 import { CreateUserDto } from "../users/dto/create-user.dto";
 import { AuthService } from "./auth.service";
+import { Request } from "express";
 export declare class AuthController {
     private authService;
     constructor(authService: AuthService);
@@ -9,5 +10,7 @@ export declare class AuthController {
     registration(userDto: CreateUserDto): Promise<{
         token: string;
     }>;
-    check(userDto: CreateUserDto): Promise<string>;
+    check(req: Request): Promise<{
+        token: string;
+    }>;
 }

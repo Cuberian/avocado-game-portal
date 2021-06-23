@@ -1,18 +1,38 @@
-import React from 'react';
+import React, {useContext} from 'react';
 import {useLocation, useHistory, NavLink} from 'react-router-dom'
 import {useForm} from "react-hook-form";
-import {LOGIN_ROUTE, EMAIL_REGEX, REGISTRATION_ROUTE} from "../utils/consts";
+import {LOGIN_ROUTE, EMAIL_REGEX, REGISTRATION_ROUTE, MAIN_ROUTE} from "../utils/consts";
+import {login, registration} from "../http/userAPI";
+import {observer} from "mobx-react-lite";
+import {Context} from "../index";
 
-const Auth = () => {
+const Auth = observer(() => {
 
+    const {user} = useContext(Context)
     const location = useLocation();
     const history = useHistory();
     const {register, handleSubmit, formState: { errors }} = useForm();
 
     const isLogin = location.pathname === LOGIN_ROUTE;
 
-    const onSubmit = ({email, nickname, password}) => {
-        console.log('data', {email, nickname, password})
+    const signIn = async ({email, nickname, password}) => {
+        try {
+            let userData = null
+            if (isLogin) {
+                userData = await login(email, password)
+            } else {
+                userData = await registration(email, nickname, password)
+            }
+
+            user.setUser(userData)
+            user.setIsAuth(true)
+
+            console.log(userData)
+
+            history.push(MAIN_ROUTE)
+        } catch (e) {
+            alert(e.response.data.message)
+        }
     }
 
     return (
@@ -20,7 +40,7 @@ const Auth = () => {
            <div className="max-w-4xl mx-auto">
                <div className="rounded-md bg-white flex flex-col space-y-4 px-5 py-10 w-3/5 mx-auto">
                    <p className="font-pressStart text-center text-2xl">{isLogin ? 'Авторизация': 'Регистрация'}</p>
-                   <form action="" onSubmit={handleSubmit(onSubmit)} className="space-y-4">
+                   <form action="" onSubmit={handleSubmit(signIn)} className="space-y-4">
                         <div className="flex flex-col">
                             <span className="text-lg font-pressStart ">Почта</span>
                             <input className="border-b-2 border-black pt-1 text-lg focus:outline-none" type="text"
@@ -61,6 +81,6 @@ const Auth = () => {
            </div>
         </div>
     );
-};
+});
 
 export default Auth;

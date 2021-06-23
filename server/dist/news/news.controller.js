@@ -16,6 +16,11 @@ exports.NewsController = void 0;
 const common_1 = require("@nestjs/common");
 const news_service_1 = require("./news.service");
 const create_news_dto_1 = require("./dto/create-news.dto");
+const platform_express_1 = require("@nestjs/platform-express");
+const multer_1 = require("multer");
+const uuid_1 = require("uuid");
+const path_1 = require("path");
+const rxjs_1 = require("rxjs");
 let NewsController = class NewsController {
     constructor(newsService) {
         this.newsService = newsService;
@@ -28,6 +33,13 @@ let NewsController = class NewsController {
     }
     getAll() {
         return this.newsService.getAllNews();
+    }
+    uploadFile(file, body) {
+        const { newsId } = body;
+        return this.newsService.setCover(Number(newsId), file.filename());
+    }
+    findCoverImage(filename, res) {
+        return rxjs_1.of(res.sendFile(path_1.join(process.cwd(), 'uploads/covers/' + filename)));
     }
 };
 __decorate([
@@ -50,6 +62,32 @@ __decorate([
     __metadata("design:paramtypes", []),
     __metadata("design:returntype", void 0)
 ], NewsController.prototype, "getAll", null);
+__decorate([
+    common_1.Post('/covers/upload'),
+    common_1.UseInterceptors(platform_express_1.FileInterceptor('file', {
+        storage: multer_1.diskStorage({
+            destination: './uploads/covers',
+            filename: (req, file, cb) => {
+                const filename = path_1.default.parse(file.originalname).name.replace(/\s/g, '') + uuid_1.v4();
+                const extension = path_1.default.parse(file.originalname).ext;
+                cb(null, `${filename}${extension}`);
+            }
+        })
+    })),
+    __param(0, common_1.UploadedFile()),
+    __param(1, common_1.Body()),
+    __metadata("design:type", Function),
+    __metadata("design:paramtypes", [Object, Object]),
+    __metadata("design:returntype", void 0)
+], NewsController.prototype, "uploadFile", null);
+__decorate([
+    common_1.Get('/covers/:filename'),
+    __param(0, common_1.Param('filename')),
+    __param(1, common_1.Res()),
+    __metadata("design:type", Function),
+    __metadata("design:paramtypes", [String, Object]),
+    __metadata("design:returntype", void 0)
+], NewsController.prototype, "findCoverImage", null);
 NewsController = __decorate([
     common_1.Controller('news'),
     __metadata("design:paramtypes", [news_service_1.NewsService])

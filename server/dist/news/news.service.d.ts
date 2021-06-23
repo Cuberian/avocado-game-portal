@@ -6,4 +6,5 @@ export declare class NewsService {
     createNews(dto: CreateNewsDto): Promise<News>;
     getNewsById(id: number): Promise<News>;
     getAllNews(): Promise<News[]>;
+    setCover(newsId: number, coverImage: string): Promise<News>;
 }

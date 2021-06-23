@@ -18,6 +18,9 @@ export class News extends Model<News, NewsCreationAttributes> {
     @Column({ type: DataType.STRING, allowNull: false })
     header: string;
 
+    @Column({ type: DataType.STRING })
+    coverImage: string;
+
     @Column({ type: DataType.TEXT, allowNull: false })
     text: string;
 

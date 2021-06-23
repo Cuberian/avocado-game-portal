@@ -10,6 +10,7 @@ interface NewsCreationAttributes {
 export declare class News extends Model<News, NewsCreationAttributes> {
     id: number;
     header: string;
+    coverImage: string;
     text: string;
     views: number;
     record_type: number;

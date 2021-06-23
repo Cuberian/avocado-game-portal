@@ -15,6 +15,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.AuthController = void 0;
 const common_1 = require("@nestjs/common");
 const create_user_dto_1 = require("../users/dto/create-user.dto");
+const jwt_auth_guard_1 = require("./jwt-auth.guard");
 const auth_service_1 = require("./auth.service");
 let AuthController = class AuthController {
     constructor(authService) {
@@ -26,8 +27,8 @@ let AuthController = class AuthController {
     registration(userDto) {
         return this.authService.registration(userDto);
     }
-    check(userDto) {
-        return this.authService.check(userDto);
+    check(req) {
+        return this.authService.check(req['user']);
     }
 };
 __decorate([
@@ -45,10 +46,11 @@ __decorate([
     __metadata("design:returntype", void 0)
 ], AuthController.prototype, "registration", null);
 __decorate([
-    common_1.Post('/check'),
-    __param(0, common_1.Body()),
+    common_1.UseGuards(jwt_auth_guard_1.JwtAuthGuard),
+    common_1.Get('/check'),
+    __param(0, common_1.Req()),
     __metadata("design:type", Function),
-    __metadata("design:paramtypes", [create_user_dto_1.CreateUserDto]),
+    __metadata("design:paramtypes", [Object]),
     __metadata("design:returntype", void 0)
 ], AuthController.prototype, "check", null);
 AuthController = __decorate([

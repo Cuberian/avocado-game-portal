@@ -1,6 +1,8 @@
-import {Body, Controller, Post} from '@nestjs/common';
+import {Body, Controller, Get, Post, Req, UseGuards} from '@nestjs/common';
 import {CreateUserDto} from "../users/dto/create-user.dto";
+import {JwtAuthGuard} from "./jwt-auth.guard";
 import {AuthService} from "./auth.service";
+import {Request} from "express";
 
 @Controller('auth')
 export class AuthController {
@@ -17,8 +19,9 @@ export class AuthController {
         return this.authService.registration(userDto)
     }
 
-    @Post('/check')
-    check(@Body() userDto: CreateUserDto) {
-        return this.authService.check(userDto)
+    @UseGuards(JwtAuthGuard)
+    @Get('/check')
+    check(@Req() req: Request) {
+        return this.authService.check(req['user'])
     }
 }

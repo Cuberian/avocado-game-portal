@@ -5,6 +5,7 @@ import {JwtAuthGuard} from "../auth/jwt-auth.guard";
 import {RolesGuard} from "../auth/roles.guard";
 import {Roles} from "../auth/roles-auth.decorator";
 import {SetRoleDto} from "./dto/set-role.dto";
+import {fileURLToPath} from "url";
 
 @Controller('users')
 export class UsersController {

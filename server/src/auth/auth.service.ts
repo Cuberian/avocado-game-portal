@@ -52,7 +52,7 @@ export class AuthService {
         return this.generateToken(user)
     }
 
-    async check(userDto: CreateUserDto) {
-        return 'ggg'
+    async check(user: User) {
+        return this.generateToken(user)
     }
 }

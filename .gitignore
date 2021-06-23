@@ -1,5 +1,6 @@
 client/node_modules
 client/src/style/main.css
 server/node_modules
+server/uploads
 .idea
 .DS_Store

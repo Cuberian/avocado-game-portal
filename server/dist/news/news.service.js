@@ -29,6 +29,10 @@ let NewsService = class NewsService {
     async getAllNews() {
         return await this.newsRepository.findAll();
     }
+    async setCover(newsId, coverImage) {
+        const news = await this.newsRepository.findByPk(newsId);
+        return await news.update({ 'coverImage': coverImage });
+    }
 };
 NewsService = __decorate([
     common_1.Injectable(),

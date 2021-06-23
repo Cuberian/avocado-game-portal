@@ -8,14 +8,15 @@ import News from "./pages/News";
 import Games from "./pages/Games";
 
 import {
-    ADMIN_ROUTE,
+    ADMIN_ROUTE, CREATE_NEWS_ROUTE,
     GAMES_ROUTE,
     LOGIN_ROUTE,
     MAIN_ROUTE,
     NEWS_ROUTE,
     PROFILE_ROUTE,
-    REGISTRATION_ROUTE
+    REGISTRATION_ROUTE, UPDATE_NEWS_ROUTE
 } from "./utils/consts";
+import CreateUpdateNews from "./pages/CreateUpdateNews";
 
 export const authRoutes = [
     {
@@ -25,6 +26,14 @@ export const authRoutes = [
     {
         path: PROFILE_ROUTE,
         Component: Profile
+    },
+    {
+        path: CREATE_NEWS_ROUTE,
+        Component: CreateUpdateNews
+    },
+    {
+        path: UPDATE_NEWS_ROUTE + '/:id',
+        Component: CreateUpdateNews
     }
 ]
 
