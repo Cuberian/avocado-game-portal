@@ -1,11 +1,13 @@
-import {Body, Controller, Get, Param, Post, Res, UploadedFile, UseInterceptors} from '@nestjs/common';
+import {Body, Controller, Delete, Get, Param, Post, Put, Res, UploadedFile, UseInterceptors} from '@nestjs/common';
 import {NewsService} from "./news.service";
 import {CreateNewsDto} from "./dto/create-news.dto";
 import { FileInterceptor } from "@nestjs/platform-express";
 import { diskStorage } from "multer"
 import { v4 as uuidv4 } from "uuid";
-import path, { join } from "path";
+const path = require("path");
+import {join} from "path"
 import {of} from "rxjs";
+import {UpdateNewsDto} from "./dto/update-news.dto";
 
 @Controller('news')
 export class NewsController {
@@ -16,10 +18,19 @@ export class NewsController {
     create(@Body() dto: CreateNewsDto) {
         return this.newsService.createNews(dto)
     }
+    @Put()
+    update(@Body() dto:UpdateNewsDto) {
+        return this.newsService.updateNews(dto)
+    }
 
     @Get('/:id')
     getById(@Param('id') id: number) {
         return this.newsService.getNewsById(id)
+    }
+
+    @Delete('/:id')
+    deleteById(@Param('id') id: number) {
+        return this.newsService.deleteNewsById(id)
     }
 
     @Get()
@@ -41,11 +52,16 @@ export class NewsController {
     }))
     uploadFile(@UploadedFile() file, @Body() body) {
         const { newsId } = body
-        return this.newsService.setCover(Number(newsId), file.filename())
+        return this.newsService.setCover(Number(newsId), file.filename)
     }
 
     @Get('/covers/:filename')
-    findCoverImage(@Param('filename') filename: string, @Res() res) {
+    findCoverImage(@Param('filename') filename, @Res() res) {
         return of(res.sendFile(join(process.cwd(), 'uploads/covers/' + filename)))
+    }
+
+    @Post('/covers/delete')
+    deleteCoverImage(@Body() body) {
+        return this.newsService.deleteCover(body.newsId)
     }
 }

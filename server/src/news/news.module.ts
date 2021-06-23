@@ -6,12 +6,14 @@ import {News} from "./news.model";
 import {User} from "../users/user.model";
 import {Tag} from "../tags/tag.model";
 import {NewsTags} from "../tags/news-tags.model";
+import {TagsModule} from "../tags/tags.module";
 
 @Module({
   providers: [NewsService],
   controllers: [NewsController],
   imports: [
-    SequelizeModule.forFeature([News, User, Tag, NewsTags])
+      TagsModule,
+      SequelizeModule.forFeature([News, User, Tag, NewsTags])
   ]
 })
 export class NewsModule {}

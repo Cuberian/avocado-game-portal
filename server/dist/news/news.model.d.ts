@@ -6,6 +6,7 @@ interface NewsCreationAttributes {
     text: string;
     views: number;
     record_type: string;
+    author_id: number;
 }
 export declare class News extends Model<News, NewsCreationAttributes> {
     id: number;

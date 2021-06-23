@@ -15,6 +15,7 @@ const news_model_1 = require("./news.model");
 const user_model_1 = require("../users/user.model");
 const tag_model_1 = require("../tags/tag.model");
 const news_tags_model_1 = require("../tags/news-tags.model");
+const tags_module_1 = require("../tags/tags.module");
 let NewsModule = class NewsModule {
 };
 NewsModule = __decorate([
@@ -22,6 +23,7 @@ NewsModule = __decorate([
         providers: [news_service_1.NewsService],
         controllers: [news_controller_1.NewsController],
         imports: [
+            tags_module_1.TagsModule,
             sequelize_1.SequelizeModule.forFeature([news_model_1.News, user_model_1.User, tag_model_1.Tag, news_tags_model_1.NewsTags])
         ]
     })

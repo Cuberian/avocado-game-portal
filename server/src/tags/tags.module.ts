@@ -11,6 +11,9 @@ import {News} from "../news/news.model";
   providers: [TagsService],
   imports: [
     SequelizeModule.forFeature([Tag, News, NewsTags])
+  ],
+  exports: [
+      TagsService
   ]
 })
 export class TagsModule {}

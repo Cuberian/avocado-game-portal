@@ -8,6 +8,7 @@ interface NewsCreationAttributes {
     text: string,
     views: number,
     record_type: string,
+    author_id: number
 }
 
 @Table({tableName: 'news'})

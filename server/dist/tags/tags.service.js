@@ -16,9 +16,11 @@ exports.TagsService = void 0;
 const common_1 = require("@nestjs/common");
 const sequelize_1 = require("@nestjs/sequelize");
 const tag_model_1 = require("./tag.model");
+const news_tags_model_1 = require("./news-tags.model");
 let TagsService = class TagsService {
-    constructor(tagRepository) {
+    constructor(tagRepository, newsTagsRepository) {
         this.tagRepository = tagRepository;
+        this.newsTagsRepository = newsTagsRepository;
     }
     async createTag(dto) {
         return await this.tagRepository.create(dto);
@@ -29,11 +31,19 @@ let TagsService = class TagsService {
     async getAll() {
         return await this.tagRepository.findAll();
     }
+    async deleteAllNewsTags(newsId) {
+        return await this.newsTagsRepository.findAll({ where: { newsId } }).then(r => {
+            for (const tag of r) {
+                tag.destroy();
+            }
+        });
+    }
 };
 TagsService = __decorate([
     common_1.Injectable(),
     __param(0, sequelize_1.InjectModel(tag_model_1.Tag)),
-    __metadata("design:paramtypes", [Object])
+    __param(1, sequelize_1.InjectModel(news_tags_model_1.NewsTags)),
+    __metadata("design:paramtypes", [Object, Object])
 ], TagsService);
 exports.TagsService = TagsService;
 //# sourceMappingURL=tags.service.js.map

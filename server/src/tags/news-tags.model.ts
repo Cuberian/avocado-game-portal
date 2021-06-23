@@ -10,11 +10,11 @@ export class NewsTags extends Model<NewsTags> {
     id: number;
 
     @ForeignKey(() => News)
-    @Column({ type: DataType.INTEGER, allowNull: false })
+    @Column({ type: DataType.INTEGER, allowNull: false, onDelete: 'CASCADE' })
     newsId: number;
 
     @ForeignKey(() => Tag)
-    @Column({ type: DataType.INTEGER, allowNull: false })
+    @Column({ type: DataType.INTEGER, allowNull: false, onDelete: 'CASCADE' })
     tagId: number;
 
 }

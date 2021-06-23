@@ -21,12 +21,12 @@ __decorate([
 ], NewsTags.prototype, "id", void 0);
 __decorate([
     sequelize_typescript_1.ForeignKey(() => news_model_1.News),
-    sequelize_typescript_1.Column({ type: sequelize_typescript_1.DataType.INTEGER, allowNull: false }),
+    sequelize_typescript_1.Column({ type: sequelize_typescript_1.DataType.INTEGER, allowNull: false, onDelete: 'CASCADE' }),
     __metadata("design:type", Number)
 ], NewsTags.prototype, "newsId", void 0);
 __decorate([
     sequelize_typescript_1.ForeignKey(() => tag_model_1.Tag),
-    sequelize_typescript_1.Column({ type: sequelize_typescript_1.DataType.INTEGER, allowNull: false }),
+    sequelize_typescript_1.Column({ type: sequelize_typescript_1.DataType.INTEGER, allowNull: false, onDelete: 'CASCADE' }),
     __metadata("design:type", Number)
 ], NewsTags.prototype, "tagId", void 0);
 NewsTags = __decorate([

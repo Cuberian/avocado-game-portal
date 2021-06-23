@@ -19,8 +19,10 @@ const create_news_dto_1 = require("./dto/create-news.dto");
 const platform_express_1 = require("@nestjs/platform-express");
 const multer_1 = require("multer");
 const uuid_1 = require("uuid");
+const path = require("path");
 const path_1 = require("path");
 const rxjs_1 = require("rxjs");
+const update_news_dto_1 = require("./dto/update-news.dto");
 let NewsController = class NewsController {
     constructor(newsService) {
         this.newsService = newsService;
@@ -28,18 +30,27 @@ let NewsController = class NewsController {
     create(dto) {
         return this.newsService.createNews(dto);
     }
+    update(dto) {
+        return this.newsService.updateNews(dto);
+    }
     getById(id) {
         return this.newsService.getNewsById(id);
+    }
+    deleteById(id) {
+        return this.newsService.deleteNewsById(id);
     }
     getAll() {
         return this.newsService.getAllNews();
     }
     uploadFile(file, body) {
         const { newsId } = body;
-        return this.newsService.setCover(Number(newsId), file.filename());
+        return this.newsService.setCover(Number(newsId), file.filename);
     }
     findCoverImage(filename, res) {
         return rxjs_1.of(res.sendFile(path_1.join(process.cwd(), 'uploads/covers/' + filename)));
+    }
+    deleteCoverImage(body) {
+        return this.newsService.deleteCover(body.newsId);
     }
 };
 __decorate([
@@ -50,12 +61,26 @@ __decorate([
     __metadata("design:returntype", void 0)
 ], NewsController.prototype, "create", null);
 __decorate([
+    common_1.Put(),
+    __param(0, common_1.Body()),
+    __metadata("design:type", Function),
+    __metadata("design:paramtypes", [update_news_dto_1.UpdateNewsDto]),
+    __metadata("design:returntype", void 0)
+], NewsController.prototype, "update", null);
+__decorate([
     common_1.Get('/:id'),
     __param(0, common_1.Param('id')),
     __metadata("design:type", Function),
     __metadata("design:paramtypes", [Number]),
     __metadata("design:returntype", void 0)
 ], NewsController.prototype, "getById", null);
+__decorate([
+    common_1.Delete('/:id'),
+    __param(0, common_1.Param('id')),
+    __metadata("design:type", Function),
+    __metadata("design:paramtypes", [Number]),
+    __metadata("design:returntype", void 0)
+], NewsController.prototype, "deleteById", null);
 __decorate([
     common_1.Get(),
     __metadata("design:type", Function),
@@ -68,8 +93,8 @@ __decorate([
         storage: multer_1.diskStorage({
             destination: './uploads/covers',
             filename: (req, file, cb) => {
-                const filename = path_1.default.parse(file.originalname).name.replace(/\s/g, '') + uuid_1.v4();
-                const extension = path_1.default.parse(file.originalname).ext;
+                const filename = path.parse(file.originalname).name.replace(/\s/g, '') + uuid_1.v4();
+                const extension = path.parse(file.originalname).ext;
                 cb(null, `${filename}${extension}`);
             }
         })
@@ -85,9 +110,16 @@ __decorate([
     __param(0, common_1.Param('filename')),
     __param(1, common_1.Res()),
     __metadata("design:type", Function),
-    __metadata("design:paramtypes", [String, Object]),
+    __metadata("design:paramtypes", [Object, Object]),
     __metadata("design:returntype", void 0)
 ], NewsController.prototype, "findCoverImage", null);
+__decorate([
+    common_1.Post('/covers/delete'),
+    __param(0, common_1.Body()),
+    __metadata("design:type", Function),
+    __metadata("design:paramtypes", [Object]),
+    __metadata("design:returntype", void 0)
+], NewsController.prototype, "deleteCoverImage", null);
 NewsController = __decorate([
     common_1.Controller('news'),
     __metadata("design:paramtypes", [news_service_1.NewsService])

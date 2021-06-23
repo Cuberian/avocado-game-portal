@@ -22,6 +22,9 @@ TagsModule = __decorate([
         providers: [tags_service_1.TagsService],
         imports: [
             sequelize_1.SequelizeModule.forFeature([tag_model_1.Tag, news_model_1.News, news_tags_model_1.NewsTags])
+        ],
+        exports: [
+            tags_service_1.TagsService
         ]
     })
 ], TagsModule);

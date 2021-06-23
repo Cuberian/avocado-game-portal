@@ -1,4 +1,4 @@
-import React, {useContext, useRef, useState} from 'react';
+import React, {useContext, useEffect, useRef, useState} from 'react';
 import {useHistory, useLocation, useParams} from "react-router-dom";
 import {Context} from "../index";
 
@@ -9,7 +9,7 @@ import 'react-quill/dist/quill.snow.css';
 import {formats, modules} from "../utils/editor-tools";
 import Tag from "../components/Tag";
 import {useForm} from "react-hook-form";
-import {$authHost} from "../http";
+import {createNews, getById, getCover, updateNews} from "../http/newsAPI";
 
 const CreateUpdateNews = () => {
     let { id } = useParams();
@@ -19,10 +19,27 @@ const CreateUpdateNews = () => {
     const isUpdate = location.pathname.split('/').includes('update')
     const [newsText, setNewsText] = useState('')
     const [newsTags, setNewsTags] = useState([])
+    const [coverAction, setCoverAction] = useState()
     const [coverImage, setCoverImage] = useState()
 
 
     const tagRef = useRef(null)
+
+
+
+    useEffect(() => {
+        if(isUpdate) {
+            getById(id).then(news => {
+                setValue('newsTitle', news.header)
+                setNewsText(news.text)
+                setNewsTags(news.tags.map(item => item.value))
+                if(news.coverImage)
+                {
+                    setCoverImage(process.env.REACT_APP_API_URL + 'news/covers/' + news.coverImage)
+                }
+            })
+        }
+    }, [])
 
     const removeTagHandler = (tagName) => {
         setNewsTags(newsTags.filter(el => el !== tagName))
@@ -40,13 +57,6 @@ const CreateUpdateNews = () => {
 
     const {register, handleSubmit, formState: { errors }, setValue} = useForm();
 
-    const urlToFile = (url) =>{
-        return (fetch(url)
-                .then((res) => res.arrayBuffer())
-                .then((buf) => new File([buf], 'image.png', {type:'image/png'}))
-        );
-    }
-
     const changeText = text => {
         setNewsText(text)
         setValue('text', text)
@@ -54,31 +64,36 @@ const CreateUpdateNews = () => {
 
     const removeImage = () => {
         setCoverImage(null)
+        setCoverAction('delete')
+        console.log('delete')
         setValue('image', undefined)
     }
 
     const uploadImage = async (e) => {
         const image = e.target.files[0]
-        console.log(image)
-        //const formData = new FormData()
-        // formData.append('newsId', '10')
-        // formData.append('file', image)
-        // await $authHost.post('news/covers/upload', formData, {headers:{'Content-Type': 'multipart/form-data'}})
         if(image) {
             setValue('image', image)
+            setCoverAction('update')
             setCoverImage(URL.createObjectURL(image))
         }
     }
 
-    const publishNews = ({newsTitle, text , image}) => {
-
+    const publishNews = async ({newsTitle, text, image}) => {
+        if(isUpdate)
+        {
+            const updatedNews = await updateNews(id, newsTitle,text, newsTags, image, coverAction)
+            history.push('/news')
+        } else {
+            const news = await createNews(newsTitle, text, user.user.id, newsTags, image)
+            history.push('/news')
+        }
     }
 
 
     return (
         <div className="w-full flex-grow py-10">
             <form onSubmit={handleSubmit(publishNews)} className="mx-auto max-w-5xl flex flex-col px-5 py-10 bg-white rounded-md space-y-5">
-                <p className="font-pressStart text-lg text-center">Создать новость</p>
+                <p className="font-pressStart text-lg text-center">{isUpdate ? 'Обновить' : 'Создать'} новость</p>
                 <input className="py-3 font-pressStart focus:outline-none" placeholder="Название новости"
                        { ...register("newsTitle", {required: 'Обязательное поле для заполнения'})}/>
                 <ReactQuill onChange={(value) => changeText(value)} modules={modules} formats={formats} value={newsText}/>
@@ -125,7 +140,7 @@ const CreateUpdateNews = () => {
                     <input type='file' className="hidden" onChange={(e) => uploadImage(e)}/>
                 </label>
                 <button type="submit" className="font-pressStart px-3 py-2 bg-avocado-400 rounded-md">
-                    Опубликовать
+                    {isUpdate ? 'Обновить' : 'Опубликовать'}
                 </button>
             </form>
         </div>
